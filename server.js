@@ -5,7 +5,7 @@ const apiRoutes = require('./routes/api');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const corsOptions = {
   origin: '*',
@@ -17,9 +17,9 @@ app.use(express.json());
 app.use('/api', apiRoutes);
 
 // Load SSL/TLS certificates
-const privateKey = fs.readFileSync('path/to/private-key.pem', 'utf8');
-const certificate = fs.readFileSync('path/to/certificate.pem', 'utf8');
-const ca = fs.readFileSync('path/to/ca.pem', 'utf8');
+const privateKey = fs.readFileSync('34.173.150.41/private.key', 'utf8');
+const certificate = fs.readFileSync('34.173.150.41/certificate.crt', 'utf8');
+const ca = fs.readFileSync('34.173.150.41/ca_bundle.crt', 'utf8');
 
 const credentials = {
   key: privateKey,
