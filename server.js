@@ -17,9 +17,9 @@ app.use(express.json());
 app.use('/api', apiRoutes);
 
 // Load SSL/TLS certificates
-const privateKey = fs.readFileSync('34.133.7.18/private.key', 'utf8');
-const certificate = fs.readFileSync('34.133.7.18/certificate.crt', 'utf8');
-const ca = fs.readFileSync('34.133.7.18/ca_bundle.crt', 'utf8');
+const privateKey = fs.readFileSync('35.196.229.17/private.key', 'utf8');
+const certificate = fs.readFileSync('35.196.229.17/certificate.crt', 'utf8');
+const ca = fs.readFileSync('35.196.229.17/ca_bundle.crt', 'utf8');
 
 const credentials = {
   key: privateKey,
