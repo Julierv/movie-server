@@ -1,6 +1,6 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const uri = "mongodb+srv://web_client:Dragonite12@moviedatacluster.f7owxau.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Julierv:Dragonite12@moviedatacluster.f7owxau.mongodb.net/?retryWrites=true&w=majority&appName=MovieDataCluster";
 
 const client = new MongoClient(uri, {
   serverApi: {
