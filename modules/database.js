@@ -76,8 +76,19 @@ async function getAiRecommendations(selectedIds) {
   return recommendations;
 }
 
+async function getMovieById(id) {
+  await initialize();
+
+  const database = client.db("TMBD_Movies");
+  const collection = database.collection("movies");
+
+  const movie = await collection.findOne({ tmdb_id: id });
+  return movie;
+}
+
 
 module.exports = {
   getRandomItems,
   getAiRecommendations,
+  getMovieById
 };
