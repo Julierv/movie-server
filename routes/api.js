@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const databaseModule = require('../modules/database');
 
-router.post('/api/getRecomendations', async (req, res) => {
+router.post('/api/getAiRecommendations', async (req, res) => {
   try {
     const { selected } = req.body;
 
