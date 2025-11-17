@@ -21,4 +21,18 @@ router.get('/getRandomItems', async (req, res) => {
   }
 });
 
+router.get('/getMovieById/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const movie = await databaseModule.getMovieById(id);
+
+    if (!movie) return res.status(404).json({ error: "Movie not found" });
+    res.json(movie);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
 module.exports = router;
