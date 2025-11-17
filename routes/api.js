@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const databaseModule = require('../modules/database');
 
-router.get('/getRecomendations', async (req, res) => {
+router.post('/api/getRecomendations', async (req, res) => {
   try {
     const recomendations = await databaseModule.getRecomendations();
     res.json(recomendations);
