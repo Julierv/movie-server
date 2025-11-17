@@ -29,34 +29,32 @@ async function getRandomItems() {
   return await collection.aggregate([{ $sample: { size: 20 } }]).toArray();
 }
 
-// ----------------------
-// AI-BASED RECOMMENDATIONS
-// ----------------------
-
 async function getAiRecommendations(selectedIds) {
   await initialize();
 
   const database = client.db("TMBD_Movies");
   const collection = database.collection("movies");
 
-  // 1. Get the selected movies from DB
+  // Force-cast selected IDs to numbers
+  selectedIds = selectedIds.map(id => Number(id));
+
+  // 1. Fetch the selected movies
   const selectedMovies = await collection
     .find({ tmdb_id: { $in: selectedIds } })
     .toArray();
 
   if (selectedMovies.length === 0) return [];
 
-  // 2. Merge similarity scores
-  const scoreMap = {}; // { tmdb_id: combinedScore }
+  const scoreMap = {};
 
+  // 2. Merge similarity scores
   for (const movie of selectedMovies) {
     if (!movie.similar) continue;
 
     for (const sim of movie.similar) {
-      const id = sim.tmdb_id;
-      const score = sim.score;
+      const id = Number(sim.tmdb_id);     // fixed
+      const score = Number(sim.score);    // fucking FIXED
 
-      // Skip movies that were selected
       if (selectedIds.includes(id)) continue;
 
       if (!scoreMap[id]) scoreMap[id] = 0;
@@ -64,19 +62,20 @@ async function getAiRecommendations(selectedIds) {
     }
   }
 
-  // 3. Sort movies by combined similarity score DESC
+  // 3. Sort by highest score
   const sorted = Object.entries(scoreMap)
-    .sort((a, b) => b[1] - a[1]) // sort by score
-    .slice(0, 3) // take top 3
-    .map((entry) => Number(entry[0])); // extract tmdb_id
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([id]) => Number(id));
 
-  // 4. Fetch full movie objects for the 3 recommendations
+  // 4. Fetch movies for those IDs
   const recommendations = await collection
     .find({ tmdb_id: { $in: sorted } })
     .toArray();
 
   return recommendations;
 }
+
 
 module.exports = {
   getRandomItems,
