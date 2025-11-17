@@ -5,10 +5,8 @@ const databaseModule = require('../modules/database');
 router.post('/getAiRecommendations', async (req, res) => {
   try {
     const { selected } = req.body;
-
-    const recomendations = await databaseModule.getAiRecommendations(selected);
-    res.json(recomendations);
-
+    const recommendations = await databaseModule.getAiRecommendations(selected);
+    res.json(recommendations);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
